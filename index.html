@@ -4,10 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тестовое задание для ТехСап</title>
+    <link rel="stylesheet" href="css-style-main/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
-    <h1>Привет мир!</h1>
+    <div class="row">
+        <div class="col-4 colomns" id="left">
+            <!-- Создал одну сетку внутри рапределил по 12 колонок. На поле ввода (которое будет плавать) 
+            и на сами всплывающии окошки из чата-->
+            <div class="row">
+                <!-- Здесь создал сообщения которые будем генерить -->
+                <div class="col-12">
+                    <div class="operator-message">
+                        <span id="random_name">Имя оператора: @random_name</span>
+                        <span class="message">Добрый день! <br> Извините за долгий ответ! ыфвфывфвыф</span>
+                    </div>
+                    <div class="operator-message">
+                        <span id="random_name">Имя оператора: @random_name</span>
+                        <span class="message">Добрый день! <br> Извините за долгий ответ! ыфвфывфвыф</span>
+                    </div>
+                    <div class="user-message">
+                        <span id="random_name">Имя пользователя: @username в бд</span>
+                        <span class="message">Добрый день! <br> 12312312313212313123</span>
+                    </div>
+                    <div class="user-message">
+                        <span id="random_name">Имя пользователя: @username в бд</span>
+                        <span class="message">Добрый день! <br> 12312312313212313123</span>
+                    </div>
+                    <div class="operator-message">
+                        <span id="random_name">Имя оператора: @random_name</span>
+                        <span class="message">Добрый день! <br> Извините за долгий ответ! ыфвфывфвыф</span>
+                    </div>
+                    <div class="empty-block">
+                    </div>
+                </div>
+                <!-- Тут создал кнопки, привязал в низу -->
+                <div class="col-12">
+                    <div id="input_field">
+                        <div class="input-group">
+                            <textarea class="form-control" aria-label="С текстовым полем"></textarea>
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Группа кнопок с вложенным раскрывающимся списком">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Статус: В сети
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Перерыв</a></li>
+                                    <li><a class="dropdown-item" href="#">Не в сети</a></li>
+                                </ul>
+                            </div>
+                            <button type="button" class="btn btn-outline-secondary">Макрос</button>
+                            <button type="button" class="btn btn-outline-success">Отправить</button>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="col-4 colomns" id="center"></div>
+        <div class="col-4 colomns" id="right"></div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
