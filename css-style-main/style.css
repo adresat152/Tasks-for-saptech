@@ -63,3 +63,9 @@ a {
     background-color: white;
     padding: 5px;
 }
+
+.centerStyle {
+    border-bottom: 1px solid grey;
+    height: 150px;
+    width: 100%;
+}

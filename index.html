@@ -35,6 +35,7 @@
                         <span id="random_name">Имя оператора: @random_name</span>
                         <span class="message">Добрый день! <br> Извините за долгий ответ! ыфвфывфвыф</span>
                     </div>
+                    <!-- Пустой блок для возможности скролла ниже поля с сообещнием -->
                     <div class="empty-block">
                     </div>
                 </div>
@@ -61,7 +62,35 @@
                 </div>
             </div>
         </div>
-        <div class="col-4 colomns" id="center"></div>
+        <div class="col-4 colomns" id="center">
+            <!-- Создал 3 блока для каждой базы данных. -->
+            <div class="row">
+                <div class="col-12 centerStyle" id="database-user">
+                    <h6>database client</h3>
+                    <span>client_id: @client_id</span><br>
+                    <span>username: @username</span><br>
+                    <span>name: @name</span><br>
+                    <span>age: @age</span><br>
+                    <span>city: @city</span>
+                </div>
+                <div class="col-12 centerStyle" id="database-order">
+                    <h6>database order</h6>
+                    <span>order_id: @order_id</span><br>
+                    <span>price: @price</span><br>
+                    <span>order_client_id: @order_client_id</span><br>
+                    <span>place: @place</span>
+                </div>
+                <div class="col-12 centerStyle" id="database-ticket">
+                    <h6>database ticket</h6>
+                    <span>ticket_id: @ticket_id</span><br>
+                    <span>ticket_client: @ticket_client</span><br>
+                    <span>csat: @csat</span><br>
+                    <!-- <span>text: не отобр.</span><br> -->
+                    <span>date: @date</span><br>
+                    <span>client_order_id: @client_order_id</span>
+                </div>
+            </div>
+        </div>
         <div class="col-4 colomns" id="right"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
