@@ -66,6 +66,9 @@ a {
 
 .centerStyle {
     border-bottom: 1px solid grey;
-    height: 150px;
+    height: 200px;
     width: 100%;
+}
+.leftStyle {
+
 }

@@ -4,6 +4,23 @@ $conn = new mysqli("localhost", "x95317ww_suptech", "GlobalForvard11_", "x95317w
 if($conn->connect_error){
     die("Ошибка: " . $conn->connect_error);
 }
+$page = isset($_GET['tickets']) ? intval($_GET['tickets']) : 0;; //1-ссылка по-умолчанию
+$sql = "SELECT * FROM `tickets` WHERE `ticket_id`=$page";
+if($result = $conn->query($sql)){
+    $data = mysql_fetch_assoc($result);
+    $result->free();
+} else{
+    echo "Ошибка: " . $conn->error;
+};
+
+$query = "SELECT tickets.ticket_client FROM tickets WHERE tickets.ticket_id = $page";
+
+$result = $conn->query($query);
+
+/* fetch object array */
+while ($row = $result->fetch_row()) {
+    printf("%s (%s)\n", $row[0], $row[1]);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +92,7 @@ if($conn->connect_error){
                 <div class="col-12 centerStyle" id="database-user">
                     <h6>database client</h3>
                     <?php
-                    $sql = "SELECT * FROM clients";
+                    $sql = "SELECT * FROM clients WHERE client_id=$page";
                     if($result = $conn->query($sql)){
                         $rowsCount = $result->num_rows; // количество полученных строк
                         foreach($result as $row){
@@ -94,29 +111,51 @@ if($conn->connect_error){
                 </div>
                 <div class="col-12 centerStyle" id="database-order">
                     <h6>database order</h6>
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="text" class="form-control" placeholder="Привязать заказ к пользователю по ID">
+                        <button class="btn btn-outline-secondary" type="button">Привязать</button>
+                        <button class="btn btn-outline-secondary" type="button">Отвязать</button>
+                    </div>
+                    <span>order_client_id: 
                     <?php
-                    $sql = "SELECT * FROM orders";
+
+                    $sql = "SELECT client_id FROM clients INNER JOIN orders ON  orders.order_client_id = clients.client_id WHERE client_id = 20";
                     if($result = $conn->query($sql)){
                         $rowsCount = $result->num_rows; // количество полученных строк
                         foreach($result as $row){
-                            echo "<span>order_id: " . $row["order_id"] . "</span><br>";
+                            echo $row["client_id"]. ",";
+                        }
+                        $result->free();
+                    } else{
+                        echo "Ошибка: " . $conn->error;
+                    }
+                    $sql = "SELECT * FROM orders WHERE order_id=$page";
+                    if($result = $conn->query($sql)){
+                        $rowsCount = $result->num_rows; // количество полученных строк
+                        foreach($result as $row){
+                            echo "<br><span>order_id: " . $row["order_id"] . "</span><br>";
                             echo "<span>price: " . $row["price"] . "</span><br>";
-                            echo "<span>order_client_id: " . $row["order_client_id"] . "</span><br>";
                             echo "<span>place: " . $row["place"] . "</span>";
                         }
                         $result->free();
                     } else{
                         echo "Ошибка: " . $conn->error;
                     }
-                    
                     ?>
+                    </span>
                 </div>
                 <div class="col-12 centerStyle" id="database-ticket">
                     <h6>database ticket</h6>
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="text" class="form-control" placeholder="Привязать тикет к заказу по ID">
+                        <button class="btn btn-outline-secondary" type="button">Привязать</button>
+                        <button class="btn btn-outline-secondary" type="button">Отвязать</button>
+                    </div>
                     <?php
-                    $sql = "SELECT * FROM tickets";
+                    $sql = "SELECT * FROM tickets WHERE ticket_id=$page";
                     if($result = $conn->query($sql)){
                         $rowsCount = $result->num_rows; // количество полученных строк
+                        $randomNumber = rand(1, 20);
                         foreach($result as $row){
                             echo "<span>ticket_id: " . $row["ticket_id"] . "</span><br>";
                             echo "<span>ticket_client: " . $row["ticket_client"] . "</span><br>";
@@ -134,7 +173,27 @@ if($conn->connect_error){
                 </div>
             </div>
         </div>
-        <div class="col-4 colomns" id="right"></div>
+        <div class="col-4 colomns" id="right">
+            <div class="row">
+                <div class="col-12 leftStyle">
+                <h6>Tickets base</h3>
+                <?php
+                $sql = "SELECT * FROM tickets";
+                if($result = $conn->query($sql)){
+                    $rowsCount = $result->num_rows; // количество полученных строк
+                    foreach($result as $row){
+                        echo "<span><a href=\"index.php?tickets=" . $row["ticket_id"]. "\">ticket_id: " . $row["ticket_id"] . "</a> </span>";
+                        echo "<span>client_order_id: " . $row["client_order_id"] . "</span><br>";
+                    }
+                    $result->free();
+                } else{
+                    echo "Ошибка: " . $conn->error;
+                }
+                
+                ?>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>

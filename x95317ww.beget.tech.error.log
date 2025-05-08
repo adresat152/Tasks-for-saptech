@@ -1,0 +1,12 @@
+[Fri May 09 00:17:19 2025] [error] [client 178.66.130.108:0] PHP Fatal error:  Cannot use object of type mysqli_result as array in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 19
+[Fri May 09 00:17:22 2025] [error] [client 178.66.130.108:0] PHP Fatal error:  Cannot use object of type mysqli_result as array in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 19
+[Fri May 09 00:17:28 2025] [error] [client 178.66.130.108:0] PHP Fatal error:  Cannot use object of type mysqli_result as array in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 19
+[Fri May 09 00:18:23 2025] [error] [client 178.66.130.108:0] PHP Fatal error:  Cannot use object of type mysqli_result as array in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 19
+[Fri May 09 00:19:10 2025] [error] [client 178.66.130.108:0] PHP Fatal error:  Cannot use object of type mysqli_result as array in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 19
+[Fri May 09 00:19:59 2025] [error] [client 178.66.130.108:0] PHP Fatal error:  Cannot use object of type mysqli_result as array in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 19
+[Fri May 09 00:20:00 2025] [error] [client 178.66.130.108:0] PHP Fatal error:  Cannot use object of type mysqli_result as array in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 19
+[Fri May 09 00:20:59 2025] [error] [client 178.66.130.108:0] PHP Catchable fatal error:  Object of class mysqli_result could not be converted to string in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 19
+[Fri May 09 00:33:49 2025] [error] [client 178.66.130.108:0] PHP Fatal error:  Call to undefined method mysqli::mysql_query() in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 16, referer http://x95317ww.beget.tech/index.php?tickets=10
+[Fri May 09 00:34:07 2025] [error] [client 178.66.130.108:0] PHP Fatal error:  Call to undefined method mysqli::mysql_query() in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 16, referer http://x95317ww.beget.tech/index.php?tickets=7
+[Fri May 09 00:34:12 2025] [error] [client 178.66.130.108:0] PHP Fatal error:  Call to undefined method mysqli::mysql_query() in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 16
+[Fri May 09 00:34:44 2025] [error] [client 178.66.130.108:0] PHP Fatal error:  Call to undefined method mysqli::mysql_query() in /home/x/x95317ww/x95317ww.beget.tech/public_html/index.php on line 16
