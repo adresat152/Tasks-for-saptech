@@ -13,14 +13,18 @@ if($result = $conn->query($sql)){
     echo "Ошибка: " . $conn->error;
 };
 
-$query = "SELECT tickets.ticket_client FROM tickets WHERE tickets.ticket_id = $page";
-
-$result = $conn->query($query);
-
-/* fetch object array */
-while ($row = $result->fetch_row()) {
-    printf("%s (%s)\n", $row[0], $row[1]);
-}
+// Здесь я ищу по тикету какой тикет мы открыли и вывожу значение ID клиента тикета. Тафтология? Да.
+$queryTicketClient = "SELECT tickets.ticket_client FROM tickets WHERE tickets.ticket_id = $page";
+$result = $conn->query($queryTicketClient);
+$row = $result->fetch_array(MYSQLI_NUM);
+$ticketClientID = $row[0];
+$result->free();
+// Тут я ищу по тикету заказ который привязан к нему
+$queryTicketOrderId = "SELECT tickets.ticket_order_id FROM tickets WHERE tickets.ticket_id = $page";
+$result = $conn->query($queryTicketOrderId);
+$row = $result->fetch_array(MYSQLI_NUM);
+$ticketOrderId = $row[0];
+$result->free();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,10 +93,38 @@ while ($row = $result->fetch_row()) {
         <div class="col-4 colomns" id="center">
             <!-- Создал 3 блока для каждой базы данных. -->
             <div class="row">
+                <div class="col-12 centerStyle" id="database-ticket">
+                    <h6>database ticket</h6>
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="text" class="form-control" placeholder="Привязать тикет к заказу по ID">
+                        <button class="btn btn-outline-success" type="button">add</button>
+                        <button class="btn btn-outline-warning" type="button">check</button>
+                        <button class="btn btn-outline-danger" type="button">back</button>
+                    </div>
+                    <?php
+                    $sql = "SELECT * FROM tickets WHERE ticket_id=$page";
+                    if($result = $conn->query($sql)){
+                        $rowsCount = $result->num_rows; // количество полученных строк
+                        $randomNumber = rand(1, 20);
+                        foreach($result as $row){
+                            echo "<span>ticket_id: " . $row["ticket_id"] . "</span><br>";
+                            echo "<span>ticket_client: " . $ticketClientID . "</span><br>";
+                            echo "<span>csat: " . $row["csat"] . "</span><br>";
+                            echo "<span>date: " . $row["date"] . "</span><br>";
+                            echo "<span>ticket_order_id: " . $row["ticket_order_id"] . "</span>";
+                        }
+                        $result->free();
+                    } else{
+                        echo "Ошибка: " . $conn->error;
+                    }
+                    
+                    ?>
+                    <!-- <span>text: не отобр.</span><br> -->
+                </div>
                 <div class="col-12 centerStyle" id="database-user">
                     <h6>database client</h3>
                     <?php
-                    $sql = "SELECT * FROM clients WHERE client_id=$page";
+                    $sql = "SELECT * FROM clients WHERE client_id=$ticketClientID";
                     if($result = $conn->query($sql)){
                         $rowsCount = $result->num_rows; // количество полученных строк
                         foreach($result as $row){
@@ -111,25 +143,20 @@ while ($row = $result->fetch_row()) {
                 </div>
                 <div class="col-12 centerStyle" id="database-order">
                     <h6>database order</h6>
-                    <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control" placeholder="Привязать заказ к пользователю по ID">
-                        <button class="btn btn-outline-secondary" type="button">Привязать</button>
-                        <button class="btn btn-outline-secondary" type="button">Отвязать</button>
-                    </div>
                     <span>order_client_id: 
                     <?php
 
-                    $sql = "SELECT client_id FROM clients INNER JOIN orders ON  orders.order_client_id = clients.client_id WHERE client_id = 20";
+                    $sql = "SELECT orders.order_id FROM orders INNER JOIN clients ON  orders.order_client_id = clients.client_id WHERE client_id = $ticketClientID";
                     if($result = $conn->query($sql)){
                         $rowsCount = $result->num_rows; // количество полученных строк
                         foreach($result as $row){
-                            echo $row["client_id"]. ",";
+                            echo $row["order_id"]. ",";
                         }
                         $result->free();
                     } else{
                         echo "Ошибка: " . $conn->error;
                     }
-                    $sql = "SELECT * FROM orders WHERE order_id=$page";
+                    $sql = "SELECT * FROM orders WHERE order_id=$ticketOrderId";
                     if($result = $conn->query($sql)){
                         $rowsCount = $result->num_rows; // количество полученных строк
                         foreach($result as $row){
@@ -144,33 +171,6 @@ while ($row = $result->fetch_row()) {
                     ?>
                     </span>
                 </div>
-                <div class="col-12 centerStyle" id="database-ticket">
-                    <h6>database ticket</h6>
-                    <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control" placeholder="Привязать тикет к заказу по ID">
-                        <button class="btn btn-outline-secondary" type="button">Привязать</button>
-                        <button class="btn btn-outline-secondary" type="button">Отвязать</button>
-                    </div>
-                    <?php
-                    $sql = "SELECT * FROM tickets WHERE ticket_id=$page";
-                    if($result = $conn->query($sql)){
-                        $rowsCount = $result->num_rows; // количество полученных строк
-                        $randomNumber = rand(1, 20);
-                        foreach($result as $row){
-                            echo "<span>ticket_id: " . $row["ticket_id"] . "</span><br>";
-                            echo "<span>ticket_client: " . $row["ticket_client"] . "</span><br>";
-                            echo "<span>csat: " . $row["csat"] . "</span><br>";
-                            echo "<span>date: " . $row["date"] . "</span><br>";
-                            echo "<span>client_order_id: " . $row["client_order_id"] . "</span>";
-                        }
-                        $result->free();
-                    } else{
-                        echo "Ошибка: " . $conn->error;
-                    }
-                    
-                    ?>
-                    <!-- <span>text: не отобр.</span><br> -->
-                </div>
             </div>
         </div>
         <div class="col-4 colomns" id="right">
@@ -183,7 +183,7 @@ while ($row = $result->fetch_row()) {
                     $rowsCount = $result->num_rows; // количество полученных строк
                     foreach($result as $row){
                         echo "<span><a href=\"index.php?tickets=" . $row["ticket_id"]. "\">ticket_id: " . $row["ticket_id"] . "</a> </span>";
-                        echo "<span>client_order_id: " . $row["client_order_id"] . "</span><br>";
+                        echo "<span>ticket_order_id: " . $row["ticket_order_id"] . "</span><br>";
                     }
                     $result->free();
                 } else{
