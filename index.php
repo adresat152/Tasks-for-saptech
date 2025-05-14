@@ -83,7 +83,6 @@ $result->free();
                                     <li><a class="dropdown-item" href="#">Не в сети</a></li>
                                 </ul>
                             </div>
-                            <button type="button" class="btn btn-outline-secondary">Макрос</button>
                             <button type="button" class="btn btn-outline-success">Отправить</button>
                         </div>
                     </div> 
@@ -95,12 +94,26 @@ $result->free();
             <div class="row">
                 <div class="col-12 centerStyle" id="database-ticket">
                     <h6>database ticket</h6>
-                    <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control" placeholder="Привязать тикет к заказу по ID">
-                        <button class="btn btn-outline-success" type="button">add</button>
-                        <button class="btn btn-outline-warning" type="button">check</button>
-                        <button class="btn btn-outline-danger" type="button">back</button>
-                    </div>
+                    <form action="" method="POST">
+                        <div class="input-group input-group-sm mb-3">
+                            <button aria-label="проверить заказ" class="btn btn-outline-warning" name="check" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">check</button>
+                            <input class="form-control" type="text" name="setTickerOrder" placeholder="Привязать тикет к заказу по ID">
+                            <button class="btn btn-outline-success" name="replace" type="submit">add</button>
+                            <button class="btn btn-outline-danger" name="delete" type="submit">del</button>
+                        </div>
+                    </form>
+                    <?php
+                    if (isset($_POST['replace'])) {
+                        $setTickerOrder = $_POST['setTickerOrder'];
+                        $conn->query("UPDATE `tickets` SET `ticket_order_id` = $setTickerOrder WHERE `tickets`.`ticket_id` = $page");
+                        echo "<meta http-equiv='refresh' content='0'>";
+                    };
+                    if (isset($_POST['delete'])) {
+                        $conn->query("UPDATE `tickets` SET `ticket_order_id` = 0 WHERE `tickets`.`ticket_id` = $page");
+                        echo "<meta http-equiv='refresh' content='0'>";
+                    };
+                        
+                    ?>
                     <?php
                     $sql = "SELECT * FROM tickets WHERE ticket_id=$page";
                     if($result = $conn->query($sql)){
