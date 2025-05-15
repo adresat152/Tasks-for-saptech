@@ -43,26 +43,25 @@ $result->free();
             <div class="row">
                 <!-- Здесь создал сообщения которые будем генерить -->
                 <div class="col-12">
-                    <div class="operator-message">
-                        <span id="random_name">Имя оператора: @random_name</span>
-                        <span class="message">Добрый день! <br> Извините за долгий ответ! ыфвфывфвыф</span>
-                    </div>
-                    <div class="operator-message">
-                        <span id="random_name">Имя оператора: @random_name</span>
-                        <span class="message">Добрый день! <br> Извините за долгий ответ! ыфвфывфвыф</span>
-                    </div>
-                    <div class="user-message">
-                        <span id="random_name">Имя пользователя: @username в бд</span>
-                        <span class="message">Добрый день! <br> 12312312313212313123</span>
-                    </div>
-                    <div class="user-message">
-                        <span id="random_name">Имя пользователя: @username в бд</span>
-                        <span class="message">Добрый день! <br> 12312312313212313123</span>
-                    </div>
-                    <div class="operator-message">
-                        <span id="random_name">Имя оператора: @random_name</span>
-                        <span class="message">Добрый день! <br> Извините за долгий ответ! ыфвфывфвыф</span>
-                    </div>
+                    <?php
+                    $queryMessages = "SELECT * FROM messages WHERE messages.message_ticket_id = $page";
+                    if($result = $conn->query($queryMessages)){
+                        $rowsCount = $result->num_rows; // количество полученных строк
+                        foreach($result as $row){
+                            if($row["message_client_id"] == 0) {
+                                echo "<div class=\"operator-message\"><span id=\"random_name\">Имя Оператора: " . $row["message_operator_id"] . "</span></br>";
+                                echo "<span class=\"message\">" . $row["message_text"] . "</span></div>";
+                            } else {
+                                echo "<div class=\"user-message\"><span id=\"random_name\">Имя пользователя: " . $row["message_client_id"] . "</span></br>";
+                                echo "<span class=\"message\">" . $row["message_text"] . "</span></div>";
+                            };
+                        }
+                        $result->free();
+                    } else{
+                        echo "Ошибка: " . $conn->error;
+                    }
+                    
+                    ?>
                     <!-- Пустой блок для возможности скролла ниже поля с сообещнием -->
                     <div class="empty-block">
                     </div>
